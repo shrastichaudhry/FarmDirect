@@ -20,7 +20,8 @@ const createProduct = async(req, res)=> {
             price,
             category,
             stock,
-            image
+            image,
+            
         });
         console.log(product);
         return res.status(201).json({
@@ -47,6 +48,8 @@ const getAllProducts = async (req, res) => {
             minPrice,
             maxPrice,
             sort,
+            page=1,
+            limit=100
             
         } = req.query;
 
@@ -98,11 +101,11 @@ const getAllProducts = async (req, res) => {
         }
 
         // Pagination
-        //const skip = (page - 1) * limit;
+        const skip = (page - 1) * limit;
 
-        // products = products
-        //     .skip(skip)
-        //     .limit(Number(limit));
+        products = products
+            .skip(skip)
+            .limit(Number(limit));
 
         const result = await products;
 
