@@ -23,7 +23,7 @@ const createProduct = async (req, res) => {
             });
         }
 
-        let imageUrl = "";
+        
 
         if (!req.file) {
     return res.status(400).json({
