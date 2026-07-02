@@ -4,6 +4,8 @@ const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
 
+const upload = require("../middleware/uploadMiddleware");
+
 const {
     createProduct,
     getAllProducts,
@@ -15,7 +17,7 @@ const {
     getLatestProducts
 } = require("../controller/productController");
 
-router.post("/", authMiddleware, roleMiddleware("farmer"), createProduct);
+router.post("/", authMiddleware, roleMiddleware("farmer"), upload.single("image"), createProduct);
 router.get("/", getAllProducts);
 router.get("/:id", getSingleProduct);
 router.get("/categories/all", getCategories);

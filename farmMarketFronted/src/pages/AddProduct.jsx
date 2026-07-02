@@ -10,6 +10,7 @@ function AddProducts() {
 
   const navigate = useNavigate();
   const { addNotification } = useNotification();
+  const [image, setImage] = useState(null);
 
   const [product, setProduct] = useState({
     name: "",
@@ -29,26 +30,36 @@ function AddProducts() {
 
   const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  try {
 
-      await createProduct(product);
+    const formData = new FormData();
 
-      toast.success("Product Added Successfully");
-      addNotification("New product added");
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("category", product.category);
+    formData.append("price", product.price);
+    formData.append("stock", product.stock);
+    formData.append("image", image);
 
-      navigate("/farmer-dashboard");
+    await createProduct(formData);
 
-    } catch (err) {
+    toast.success("Product Added Successfully");
 
-      console.log(err);
+    addNotification("New product added");
 
-      toast.error("Unable to Add Product");
+    navigate("/farmer-dashboard");
 
-    }
+  } catch (err) {
 
-  };
+    console.log(err);
+
+    toast.error("Unable to Add Product");
+
+  }
+
+};
 
   return (
     <>
@@ -169,11 +180,11 @@ function AddProducts() {
                 </label>
 
                 <input
-                  type="text"
+                  type="file"
                   className="form-control"
                   name="image"
-                  value={product.image}
-                  onChange={handleChange}
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
                   required
                 />
 

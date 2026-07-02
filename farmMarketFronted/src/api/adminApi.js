@@ -48,15 +48,17 @@ export const getAllOrders = async () => {
   return response.data;
 };
 
-export const createProduct = async (productData) => {
+export const createProduct = async (formData) => {
+
   const token = localStorage.getItem("token");
 
   const response = await axiosInstance.post(
     "/products",
-    productData,
+    formData,
     {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     }
   );
