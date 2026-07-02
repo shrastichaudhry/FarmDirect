@@ -5,8 +5,16 @@ const cloudinary = require("../config/cloudinary");
 //create product
 const createProduct = async (req, res) => {
     try {
+        
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
+        console.log("USER:", req.user);
 
         const { name, description, price, category, stock } = req.body;
+        // console.log("BODY:", req.body);
+        // console.log("FILE:", req.file);
+        // console.log("USER:", req.user);
+
 
         if (!name || !description || !price || !category || !stock) {
             return res.status(400).json({
@@ -17,20 +25,14 @@ const createProduct = async (req, res) => {
 
         let imageUrl = "";
 
-        if (req.file) {
+        if (!req.file) {
+    return res.status(400).json({
+        success: false,
+        message: "Product image is required"
+    });
+}
 
-            const result = await cloudinary.uploader.upload(req.file.path);
-
-            imageUrl = result.secure_url;
-
-        } else {
-
-            return res.status(400).json({
-                success: false,
-                message: "Product image is required"
-            });
-
-        }
+const imageUrl = req.file.path;
 
         const product = await Product.create({
             farmer: req.user.id,
