@@ -1,5 +1,6 @@
 const Product = require("../model/product");
 const cloudinary = require("../config/cloudinary");
+const { stack } = require("../routes/productRoutes");
 //const Product = require("../model/product");
 
 //create product
@@ -54,7 +55,9 @@ const imageUrl = req.file.path;
 
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
+
         });
 
     }
@@ -151,7 +154,8 @@ const getAllProducts = async (req, res) => {
 
             success: false,
 
-            message: error.message
+            message: error.message,
+            stack: error.stack
 
         });
 
@@ -178,7 +182,8 @@ const getSingleProduct = async (req, res)=> {
     } catch(error){
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 };
@@ -195,7 +200,8 @@ const getCategories = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 };
@@ -212,7 +218,8 @@ const getProductCount = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 };
@@ -231,7 +238,8 @@ const getLatestProducts = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 };
@@ -264,7 +272,8 @@ const updateProduct = async (req, res)=> {
     } catch(error){
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 };
@@ -289,6 +298,7 @@ const deleteProduct = async (req, res)=> {
         return res.status(500).json({
             success: false,
             message: error.message,
+            stack: error.stack
         });
     }
 };

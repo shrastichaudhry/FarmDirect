@@ -43,6 +43,10 @@ function AddProducts() {
     formData.append("stock", product.stock);
     formData.append("image", image);
 
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
     await createProduct(formData);
 
     toast.success("Product Added Successfully");

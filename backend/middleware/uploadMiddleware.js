@@ -3,11 +3,12 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
 
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
+  cloudinary,
+  params: async (req, file) => ({
     folder: "FarmDirect",
-    allowed_formats: ["jpg", "jpeg", "png"],
-  },
+    format: file.mimetype.split("/")[1], // jpg, png, jpeg
+    public_id: Date.now().toString(),
+  }),
 });
 
 const upload = multer({ storage });
